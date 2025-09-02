@@ -204,33 +204,3 @@ aws logs tail /ecs/scalable-webapp --follow
 
 # Check RDS status
 aws rds describe-db-instances --db-instance-identifier <db-id>
-```
-
-## 📚 Additional Resources
-
-- [AWS ECS Documentation](https://docs.aws.amazon.com/ecs/)
-- [Terraform AWS Provider](https://registry.terraform.io/providers/hashicorp/aws)
-- [Flask Documentation](https://flask.palletsprojects.com/)
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🆘 Support
-
-For issues and questions:
-1. Check the troubleshooting section
-2. Review CloudWatch logs
-3. Open an issue in the repository
-
----
-
-**Note**: This is a production-ready template. Always review security configurations and adjust based on your specific requirements before deploying to production environments.

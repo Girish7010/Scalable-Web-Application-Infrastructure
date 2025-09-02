@@ -37,7 +37,7 @@ resource "aws_db_instance" "postgres" {
 
 # Store DB connection in Secrets Manager (JSON)
 resource "aws_secretsmanager_secret" "db_secret" {
-  name = "${var.project_name}-db-conn"
+  name = "${var.project_name}-rds-conn"
 }
 
 resource "aws_secretsmanager_secret_version" "db_secret_value" {

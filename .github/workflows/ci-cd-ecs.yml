@@ -78,7 +78,7 @@ jobs:
       - name: Render task definition
         run: |
           IMG="${{ needs.build-and-scan.outputs.image-uri }}"
-          sed "s|__IMAGE__|${IMG}|g" ecs-taskdef-template.json > taskdef.json
+          sed "s|__IMAGE__|${IMG}|g" ecs-taskdef-template.json > taskdef.json 
 
       - name: Update ECS service (staging)
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1

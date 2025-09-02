@@ -1,0 +1,104 @@
+name: ci-cd-ecs
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  ECR_REPO: ${{ secrets.ECR_REPO }}
+
+jobs:
+  build-and-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build Docker image
+        run: |
+          docker build -t $ECR_REPO:${{ github.sha }} .
+
+      - name: Security scan (Trivy)
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          image-ref: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPO }}:${{ github.sha }}
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+
+      - name: Tag & Push
+        run: |
+          docker tag $ECR_REPO:${{ github.sha }} ${{ steps.login-ecr.outputs.registry }}/$ECR_REPO:${{ github.sha }}
+          docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPO:${{ github.sha }}
+
+  deploy-staging:
+    needs: [build-and-scan]
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Render task definition
+        run: |
+          sed "s|__IMAGE__|${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPO }}:${{ github.sha }}|g" ecs-taskdef-template.json > taskdef.json
+        shell: bash
+      - name: Update ECS service (staging)
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: taskdef.json
+          service: ${{ secrets.ECS_SERVICE_STAGING }}
+          cluster: ${{ secrets.ECS_CLUSTER }}
+          wait-for-service-stability: true
+      - name: Integration test (health)
+        run: |
+          # Replace with your ALB DNS name (staging path if any)
+          curl -fsSL "http://$ALB_DNS/healthz" || (echo "Health check failed" && exit 1)
+        env:
+          ALB_DNS: ${{ secrets.ALB_DNS_STAGING }}
+
+  deploy-prod:
+    needs: [deploy-staging]
+    runs-on: ubuntu-latest
+    environment: production  # require manual approval via GitHub Environments
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Render task definition
+        run: |
+          sed "s|__IMAGE__|${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPO }}:${{ github.sha }}|g" ecs-taskdef-template.json > taskdef.json
+        shell: bash
+
+      - name: Update ECS service (prod -> green TG)
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: taskdef.json
+          service: ${{ secrets.ECS_SERVICE_PROD }}
+          cluster: ${{ secrets.ECS_CLUSTER }}
+          wait-for-service-stability: true
+
+      - name: Canary shift example (20% green)
+        run: |
+          bash scripts/canary_shift.sh "${{ secrets.ALB_LISTENER_ARN }}" "${{ secrets.TG_BLUE_ARN }}" "${{ secrets.TG_GREEN_ARN }}" 80 20

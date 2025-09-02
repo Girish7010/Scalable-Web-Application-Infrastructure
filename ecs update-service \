@@ -1,0 +1,655 @@
+{
+    "service": {
+        "serviceArn": "arn:aws:ecs:us-east-1:114091642196:service/scalable-webapp-cluster/scalable-webapp-prod",
+        "serviceName": "scalable-webapp-prod",
+        "clusterArn": "arn:aws:ecs:us-east-1:114091642196:cluster/scalable-webapp-cluster",
+        "loadBalancers": [
+            {
+                "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:114091642196:targetgroup/scalable-webapp-tg-blue/4cabf05500a97f4c",
+                "containerName": "web",
+                "containerPort": 8080
+            }
+        ],
+        "serviceRegistries": [],
+        "status": "ACTIVE",
+        "desiredCount": 1,
+        "runningCount": 0,
+        "pendingCount": 1,
+        "launchType": "EC2",
+        "taskDefinition": "arn:aws:ecs:us-east-1:114091642196:task-definition/scalable-webapp-task:1",
+        "deploymentConfiguration": {
+            "deploymentCircuitBreaker": {
+                "enable": false,
+                "rollback": false
+            },
+            "maximumPercent": 200,
+            "minimumHealthyPercent": 100
+        },
+        "deployments": [
+            {
+                "id": "ecs-svc/0201619654974280861",
+                "status": "PRIMARY",
+                "taskDefinition": "arn:aws:ecs:us-east-1:114091642196:task-definition/scalable-webapp-task:1",
+                "desiredCount": 1,
+                "pendingCount": 1,
+                "runningCount": 0,
+                "failedTasks": 1,
+                "createdAt": "2025-09-02T16:22:18.243000+05:30",
+                "updatedAt": "2025-09-02T16:22:28.419000+05:30",
+                "launchType": "EC2",
+                "networkConfiguration": {
+                    "awsvpcConfiguration": {
+                        "subnets": [
+                            "subnet-0550b709041675350",
+                            "subnet-007a1b5367e8d32f5"
+                        ],
+                        "securityGroups": [
+                            "sg-081be2cb80aafbf77"
+                        ],
+                        "assignPublicIp": "DISABLED"
+                    }
+                },
+                "rolloutState": "IN_PROGRESS",
+                "rolloutStateReason": "ECS deployment ecs-svc/0201619654974280861 in progress."
+            },
+            {
+                "id": "ecs-svc/6432900501357778795",
+                "status": "ACTIVE",
+                "taskDefinition": "arn:aws:ecs:us-east-1:114091642196:task-definition/scalable-webapp-task:1",
+                "desiredCount": 0,
+                "pendingCount": 0,
+                "runningCount": 0,
+                "failedTasks": 2,
+                "createdAt": "2025-09-02T16:18:50.167000+05:30",
+                "updatedAt": "2025-09-02T16:22:28.436000+05:30",
+                "launchType": "EC2",
+                "networkConfiguration": {
+                    "awsvpcConfiguration": {
+                        "subnets": [
+                            "subnet-0550b709041675350",
+                            "subnet-007a1b5367e8d32f5"
+                        ],
+                        "securityGroups": [
+                            "sg-081be2cb80aafbf77"
+                        ],
+                        "assignPublicIp": "DISABLED"
+                    }
+                },
+                "rolloutState": "IN_PROGRESS",
+                "rolloutStateReason": "ECS deployment ecs-svc/6432900501357778795 in progress."
+            }
+        ],
+        "roleArn": "arn:aws:iam::114091642196:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS",
+        "events": [
+            {
+                "id": "dbaec5b6-2af0-468b-822f-d25576d8154b",
+                "createdAt": "2025-09-02T16:23:22.270000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 7fd899d8a3d04406a6c86eeb3f65615f)."
+            },
+            {
+                "id": "485241fc-4e40-4582-a057-d36434fa1eca",
+                "createdAt": "2025-09-02T16:22:28.955000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 42796a96c88b4686a388217c108e47f3)."
+            },
+            {
+                "id": "75e63ba7-a98e-4e52-8754-4a4c0a132f16",
+                "createdAt": "2025-09-02T16:20:46.609000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 86b40f4937714f06b4e0c6e72383be45)."
+            },
+            {
+                "id": "4ab7b616-164b-4a1a-8525-576b59cd1bb3",
+                "createdAt": "2025-09-02T16:19:55.648000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 3333eba4a1eb4b81bed969da4cffa3b5)."
+            },
+            {
+                "id": "b09e1313-10af-4c56-b0d3-0ae6fb90a5bd",
+                "createdAt": "2025-09-02T16:19:04.083000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 9cb4b62353004df5a222b4d8a54c187f)."
+            },
+            {
+                "id": "2f50cd8d-3789-4c29-8ad9-5386a803ba57",
+                "createdAt": "2025-09-02T16:18:11.843000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task c119ee7f77334387892571660990334b)."
+            },
+            {
+                "id": "73d098d0-1f24-4d0b-a345-fa64dcc49cf7",
+                "createdAt": "2025-09-02T16:12:51.057000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 92dd9816ef1d438abedd7794c589bfef)."
+            },
+            {
+                "id": "b3f5eb5f-d9c0-4952-90ed-cd335601bd08",
+                "createdAt": "2025-09-02T16:11:58.929000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 028eb3f1e10c412b8dbbe8994c748da0)."
+            },
+            {
+                "id": "c5023296-5686-4184-b507-9c3f08678caa",
+                "createdAt": "2025-09-02T16:11:10.674000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 3f03c23efab34c939fcc1648ce9945f8)."
+            },
+            {
+                "id": "208db1cd-8291-4759-8307-2837680e5706",
+                "createdAt": "2025-09-02T16:07:17.543000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task c7947873a37443749293641ae18be0df)."
+            },
+            {
+                "id": "22353e7e-b7cf-4820-aa1b-acaa7528ee37",
+                "createdAt": "2025-09-02T16:01:42.769000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 7f9c37821b7e4ae4924d43369d0d6cd6)."
+            },
+            {
+                "id": "28de6f97-3dfc-42be-af90-85301e1c8854",
+                "createdAt": "2025-09-02T16:00:51.598000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task c3f3b1ab67174cdb93bf2102b0c3628c)."
+            },
+            {
+                "id": "d980ff32-d3e2-4307-93d1-3c63c9c35c8c",
+                "createdAt": "2025-09-02T16:00:01.459000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task f44e7d0f597a485b89ffcae91700bda3)."
+            },
+            {
+                "id": "f94329f9-5f01-4574-a89b-b28760fbae6c",
+                "createdAt": "2025-09-02T15:58:34.750000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 882bc880761c43f3bfdfe1e54cd598d0)."
+            },
+            {
+                "id": "2710d901-03a3-4d58-b993-f015e1de9da2",
+                "createdAt": "2025-09-02T15:57:45.189000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task a48e2b52f67446b892b35af1247a6f28)."
+            },
+            {
+                "id": "3c8841b0-cfaa-4ba0-ae4a-f6a3c249ed6e",
+                "createdAt": "2025-09-02T15:56:56.005000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task d4e5bede1848402da8cf0e8f48243b5c)."
+            },
+            {
+                "id": "d9ea0bee-e826-40ff-bba7-eda10986f452",
+                "createdAt": "2025-09-02T15:55:37.210000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task cb35d78d41724f758b73f8ccb942acdc)."
+            },
+            {
+                "id": "d5851b70-5e65-48ec-8ab4-ed84803b6c78",
+                "createdAt": "2025-09-02T15:54:49.240000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task db384fb23cbe44ed966aa7fb182aa560)."
+            },
+            {
+                "id": "686a0a16-a8fb-4673-bde0-be739801e4f6",
+                "createdAt": "2025-09-02T15:54:00.848000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task d680a6c427c24b7581e1205c79f43899)."
+            },
+            {
+                "id": "0f862f77-73af-4d15-aefd-a5b7f750f51c",
+                "createdAt": "2025-09-02T15:53:40.140000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 4d31215c2f24480795a5bc9e0ca5e2fa)."
+            },
+            {
+                "id": "0dc9e40e-a4b6-47c4-a469-3b864999887f",
+                "createdAt": "2025-09-02T15:52:37.475000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task fc86b43ba6ae42418e7bdeaa348a1261)."
+            },
+            {
+                "id": "39e9b06c-f302-4f16-b917-f305995bc5bf",
+                "createdAt": "2025-09-02T15:51:15.938000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 4dfdeec088e341f69fc232d3a69bbc1d)."
+            },
+            {
+                "id": "bb8a0e83-3c7c-4932-8de3-468d42eb701f",
+                "createdAt": "2025-09-02T15:45:44.995000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task ebb0484e7c9e4c86baeeb91ce57247b6)."
+            },
+            {
+                "id": "7eda2b91-2ef2-4ed3-a93c-3521370507e9",
+                "createdAt": "2025-09-02T15:44:53.762000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task ec994468920a46f7ad9d7789e41959bc)."
+            },
+            {
+                "id": "16277553-53f2-43ef-b5d0-347c717c898f",
+                "createdAt": "2025-09-02T15:44:12.767000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task a5ff7551033e4e97b946a97a48bf3e63)."
+            },
+            {
+                "id": "03d9e66e-2aba-4dcf-8208-5e629f4895ba",
+                "createdAt": "2025-09-02T15:43:01.070000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task c06b7bb4632547d4b5447534f4dad8f4)."
+            },
+            {
+                "id": "b26e168d-fe3d-49e1-9c7c-565664c231c1",
+                "createdAt": "2025-09-02T15:42:19.935000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task bab24dd1001241d3886b122b7de73043)."
+            },
+            {
+                "id": "0f25a2fa-13e1-44c0-a04a-1f217642c5b1",
+                "createdAt": "2025-09-02T15:41:29.464000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 2df9a1b22ab64ef9a9dcb9e51d3d4dcc)."
+            },
+            {
+                "id": "768759c6-6cf3-4ee6-9ff9-39b456897491",
+                "createdAt": "2025-09-02T15:37:29.884000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 3201eef264e64205bcd215696d8d658d)."
+            },
+            {
+                "id": "6a1987ff-ae3b-4f08-818e-7d16f782a3a9",
+                "createdAt": "2025-09-02T15:32:14.377000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 694f5e412bd9436980c85f6546ecf58a)."
+            },
+            {
+                "id": "67ea6e22-72e4-4065-b7b3-3c21c06976b5",
+                "createdAt": "2025-09-02T15:26:42.782000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 7e5f5f95e20c46a5bd901dc7f28cbc00)."
+            },
+            {
+                "id": "625c45b5-e1b3-408f-a37a-ede9852cbe0f",
+                "createdAt": "2025-09-02T15:21:15.588000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 1b71cfe1260b4c089eca54a42bd115c2)."
+            },
+            {
+                "id": "c78fb1b6-87de-463f-bddc-0d4ea467b337",
+                "createdAt": "2025-09-02T15:20:25.512000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 44b9a9501d654c0183113eb1ee386894)."
+            },
+            {
+                "id": "22c16a36-0b46-445e-af32-ceb0b8b13b10",
+                "createdAt": "2025-09-02T15:19:34.736000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task e2539d9260c04ae9bf734c67195ed305)."
+            },
+            {
+                "id": "328655e3-992a-4f86-b827-2b5a85090dbf",
+                "createdAt": "2025-09-02T15:18:46.758000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 48d4efae9ff349efa1d6be6f5b287f58)."
+            },
+            {
+                "id": "54c6a9f8-1851-4fd4-891e-99952953841e",
+                "createdAt": "2025-09-02T15:17:56.644000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 095e74a998f247958e8cc52dd9edae72)."
+            },
+            {
+                "id": "a2681b04-9bf5-4639-b4ae-538742df5026",
+                "createdAt": "2025-09-02T15:17:06.710000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 0dde217c4dc7403386524bfca28df5b3)."
+            },
+            {
+                "id": "e3dce13b-97a7-4273-8c87-9dc1e25d6b55",
+                "createdAt": "2025-09-02T15:16:16.762000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 37908d5ef97540eba26f089f22cba6ae)."
+            },
+            {
+                "id": "4f879c32-bd67-486a-8e3a-7ab5ef1d3496",
+                "createdAt": "2025-09-02T15:15:23.846000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task dd6a455a81a64ad8b9e03054bf1a5f5a)."
+            },
+            {
+                "id": "7e8d8e48-b3cf-4bdd-9dc7-09962b336e32",
+                "createdAt": "2025-09-02T15:14:32.949000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 11b6d1917ec34d6a9f39e3909ee064ad)."
+            },
+            {
+                "id": "53a2ece8-66e2-425a-8d06-1b851f294221",
+                "createdAt": "2025-09-02T15:13:41.889000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task f9480f2b1611416fa4bdd91396b6e87a)."
+            },
+            {
+                "id": "edd02afc-1462-4bab-9e4d-64c831937783",
+                "createdAt": "2025-09-02T15:12:51.315000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 242c650108134d94b1587bb25ea4a606)."
+            },
+            {
+                "id": "ca7398b5-8c2d-43e2-a10f-d1851a3fe8ae",
+                "createdAt": "2025-09-02T15:12:00.607000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 4171cf839d464cef911b7f0255d04f8f)."
+            },
+            {
+                "id": "83c89111-7e60-4ed2-b641-6ceef6165f70",
+                "createdAt": "2025-09-02T15:11:09.742000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 283dcb901edd4c3f8f932d0b0177d796)."
+            },
+            {
+                "id": "558e36be-a93d-4559-b663-3239bcc676f1",
+                "createdAt": "2025-09-02T15:10:17.825000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 94e6d138a2264e68bdbc432bb4fb97d7)."
+            },
+            {
+                "id": "22314bf6-ee28-4a3e-9c67-7d19d205775c",
+                "createdAt": "2025-09-02T15:09:26.153000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 35cc2f8a864d4594bb5a9ebaa13f9954)."
+            }
+        ],
+        "createdAt": "2025-09-{
+    "service": {
+        "serviceArn": "arn:aws:ecs:us-east-1:114091642196:service/scalable-webapp-cluster/scalable-webapp-prod",
+        "serviceName": "scalable-webapp-prod",
+        "clusterArn": "arn:aws:ecs:us-east-1:114091642196:cluster/scalable-webapp-cluster",
+        "loadBalancers": [
+            {
+                "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:114091642196:targetgroup/scalable-webapp-tg-blue/4cabf05500a97f4c",
+                "containerName": "web",
+                "containerPort": 8080
+            }
+        ],
+        "serviceRegistries": [],
+        "status": "ACTIVE",
+        "desiredCount": 1,
+        "runningCount": 0,
+        "pendingCount": 1,
+        "launchType": "EC2",
+        "taskDefinition": "arn:aws:ecs:us-east-1:114091642196:task-definition/scalable-webapp-task:1",
+        "deploymentConfiguration": {
+            "deploymentCircuitBreaker": {
+                "enable": false,
+                "rollback": false
+            },
+            "maximumPercent": 200,
+            "minimumHealthyPercent": 100
+        },
+        "deployments": [
+            {
+                "id": "ecs-svc/0201619654974280861",
+                "status": "PRIMARY",
+                "taskDefinition": "arn:aws:ecs:us-east-1:114091642196:task-definition/scalable-webapp-task:1",
+                "desiredCount": 1,
+                "pendingCount": 1,
+                "runningCount": 0,
+                "failedTasks": 1,
+                "createdAt": "2025-09-02T16:22:18.243000+05:30",
+                "updatedAt": "2025-09-02T16:23:23.630000+05:30",
+                "launchType": "EC2",
+                "networkConfiguration": {
+                    "awsvpcConfiguration": {
+                        "subnets": [
+                            "subnet-0550b709041675350",
+                            "subnet-007a1b5367e8d32f5"
+                        ],
+                        "securityGroups": [
+                            "sg-081be2cb80aafbf77"
+                        ],
+                        "assignPublicIp": "DISABLED"
+                    }
+                },
+                "rolloutState": "IN_PROGRESS",
+                "rolloutStateReason": "ECS deployment ecs-svc/0201619654974280861 in progress."
+            },
+            {
+                "id": "ecs-svc/6432900501357778795",
+                "status": "ACTIVE",
+                "taskDefinition": "arn:aws:ecs:us-east-1:114091642196:task-definition/scalable-webapp-task:1",
+                "desiredCount": 0,
+                "pendingCount": 0,
+                "runningCount": 0,
+                "failedTasks": 2,
+                "createdAt": "2025-09-02T16:18:50.167000+05:30",
+                "updatedAt": "2025-09-02T16:22:28.436000+05:30",
+                "launchType": "EC2",
+                "networkConfiguration": {
+                    "awsvpcConfiguration": {
+                        "subnets": [
+                            "subnet-0550b709041675350",
+                            "subnet-007a1b5367e8d32f5"
+                        ],
+                        "securityGroups": [
+                            "sg-081be2cb80aafbf77"
+                        ],
+                        "assignPublicIp": "DISABLED"
+                    }
+                },
+                "rolloutState": "IN_PROGRESS",
+                "rolloutStateReason": "ECS deployment ecs-svc/6432900501357778795 in progress."
+            }
+        ],
+        "roleArn": "arn:aws:iam::114091642196:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS",
+        "events": [
+            {
+                "id": "dbaec5b6-2af0-468b-822f-d25576d8154b",
+                "createdAt": "2025-09-02T16:23:22.270000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 7fd899d8a3d04406a6c86eeb3f65615f)."
+            },
+            {
+                "id": "485241fc-4e40-4582-a057-d36434fa1eca",
+                "createdAt": "2025-09-02T16:22:28.955000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 42796a96c88b4686a388217c108e47f3)."
+            },
+            {
+                "id": "75e63ba7-a98e-4e52-8754-4a4c0a132f16",
+                "createdAt": "2025-09-02T16:20:46.609000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 86b40f4937714f06b4e0c6e72383be45)."
+            },
+            {
+                "id": "4ab7b616-164b-4a1a-8525-576b59cd1bb3",
+                "createdAt": "2025-09-02T16:19:55.648000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 3333eba4a1eb4b81bed969da4cffa3b5)."
+            },
+            {
+                "id": "b09e1313-10af-4c56-b0d3-0ae6fb90a5bd",
+                "createdAt": "2025-09-02T16:19:04.083000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 9cb4b62353004df5a222b4d8a54c187f)."
+            },
+            {
+                "id": "2f50cd8d-3789-4c29-8ad9-5386a803ba57",
+                "createdAt": "2025-09-02T16:18:11.843000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task c119ee7f77334387892571660990334b)."
+            },
+            {
+                "id": "73d098d0-1f24-4d0b-a345-fa64dcc49cf7",
+                "createdAt": "2025-09-02T16:12:51.057000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 92dd9816ef1d438abedd7794c589bfef)."
+            },
+            {
+                "id": "b3f5eb5f-d9c0-4952-90ed-cd335601bd08",
+                "createdAt": "2025-09-02T16:11:58.929000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 028eb3f1e10c412b8dbbe8994c748da0)."
+            },
+            {
+                "id": "c5023296-5686-4184-b507-9c3f08678caa",
+                "createdAt": "2025-09-02T16:11:10.674000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 3f03c23efab34c939fcc1648ce9945f8)."
+            },
+            {
+                "id": "208db1cd-8291-4759-8307-2837680e5706",
+                "createdAt": "2025-09-02T16:07:17.543000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task c7947873a37443749293641ae18be0df)."
+            },
+            {
+                "id": "22353e7e-b7cf-4820-aa1b-acaa7528ee37",
+                "createdAt": "2025-09-02T16:01:42.769000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 7f9c37821b7e4ae4924d43369d0d6cd6)."
+            },
+            {
+                "id": "28de6f97-3dfc-42be-af90-85301e1c8854",
+                "createdAt": "2025-09-02T16:00:51.598000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task c3f3b1ab67174cdb93bf2102b0c3628c)."
+            },
+            {
+                "id": "d980ff32-d3e2-4307-93d1-3c63c9c35c8c",
+                "createdAt": "2025-09-02T16:00:01.459000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task f44e7d0f597a485b89ffcae91700bda3)."
+            },
+            {
+                "id": "f94329f9-5f01-4574-a89b-b28760fbae6c",
+                "createdAt": "2025-09-02T15:58:34.750000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 882bc880761c43f3bfdfe1e54cd598d0)."
+            },
+            {
+                "id": "2710d901-03a3-4d58-b993-f015e1de9da2",
+                "createdAt": "2025-09-02T15:57:45.189000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task a48e2b52f67446b892b35af1247a6f28)."
+            },
+            {
+                "id": "3c8841b0-cfaa-4ba0-ae4a-f6a3c249ed6e",
+                "createdAt": "2025-09-02T15:56:56.005000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task d4e5bede1848402da8cf0e8f48243b5c)."
+            },
+            {
+                "id": "d9ea0bee-e826-40ff-bba7-eda10986f452",
+                "createdAt": "2025-09-02T15:55:37.210000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task cb35d78d41724f758b73f8ccb942acdc)."
+            },
+            {
+                "id": "d5851b70-5e65-48ec-8ab4-ed84803b6c78",
+                "createdAt": "2025-09-02T15:54:49.240000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task db384fb23cbe44ed966aa7fb182aa560)."
+            },
+            {
+                "id": "686a0a16-a8fb-4673-bde0-be739801e4f6",
+                "createdAt": "2025-09-02T15:54:00.848000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task d680a6c427c24b7581e1205c79f43899)."
+            },
+            {
+                "id": "0f862f77-73af-4d15-aefd-a5b7f750f51c",
+                "createdAt": "2025-09-02T15:53:40.140000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 4d31215c2f24480795a5bc9e0ca5e2fa)."
+            },
+            {
+                "id": "0dc9e40e-a4b6-47c4-a469-3b864999887f",
+                "createdAt": "2025-09-02T15:52:37.475000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task fc86b43ba6ae42418e7bdeaa348a1261)."
+            },
+            {
+                "id": "39e9b06c-f302-4f16-b917-f305995bc5bf",
+                "createdAt": "2025-09-02T15:51:15.938000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 4dfdeec088e341f69fc232d3a69bbc1d)."
+            },
+            {
+                "id": "bb8a0e83-3c7c-4932-8de3-468d42eb701f",
+                "createdAt": "2025-09-02T15:45:44.995000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task ebb0484e7c9e4c86baeeb91ce57247b6)."
+            },
+            {
+                "id": "7eda2b91-2ef2-4ed3-a93c-3521370507e9",
+                "createdAt": "2025-09-02T15:44:53.762000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task ec994468920a46f7ad9d7789e41959bc)."
+            },
+            {
+                "id": "16277553-53f2-43ef-b5d0-347c717c898f",
+                "createdAt": "2025-09-02T15:44:12.767000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task a5ff7551033e4e97b946a97a48bf3e63)."
+            },
+            {
+                "id": "03d9e66e-2aba-4dcf-8208-5e629f4895ba",
+                "createdAt": "2025-09-02T15:43:01.070000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task c06b7bb4632547d4b5447534f4dad8f4)."
+            },
+            {
+                "id": "b26e168d-fe3d-49e1-9c7c-565664c231c1",
+                "createdAt": "2025-09-02T15:42:19.935000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task bab24dd1001241d3886b122b7de73043)."
+            },
+            {
+                "id": "0f25a2fa-13e1-44c0-a04a-1f217642c5b1",
+                "createdAt": "2025-09-02T15:41:29.464000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 2df9a1b22ab64ef9a9dcb9e51d3d4dcc)."
+            },
+            {
+                "id": "768759c6-6cf3-4ee6-9ff9-39b456897491",
+                "createdAt": "2025-09-02T15:37:29.884000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 3201eef264e64205bcd215696d8d658d)."
+            },
+            {
+                "id": "6a1987ff-ae3b-4f08-818e-7d16f782a3a9",
+                "createdAt": "2025-09-02T15:32:14.377000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 694f5e412bd9436980c85f6546ecf58a)."
+            },
+            {
+                "id": "67ea6e22-72e4-4065-b7b3-3c21c06976b5",
+                "createdAt": "2025-09-02T15:26:42.782000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 7e5f5f95e20c46a5bd901dc7f28cbc00)."
+            },
+            {
+                "id": "625c45b5-e1b3-408f-a37a-ede9852cbe0f",
+                "createdAt": "2025-09-02T15:21:15.588000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 1b71cfe1260b4c089eca54a42bd115c2)."
+            },
+            {
+                "id": "c78fb1b6-87de-463f-bddc-0d4ea467b337",
+                "createdAt": "2025-09-02T15:20:25.512000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 44b9a9501d654c0183113eb1ee386894)."
+            },
+            {
+                "id": "22c16a36-0b46-445e-af32-ceb0b8b13b10",
+                "createdAt": "2025-09-02T15:19:34.736000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task e2539d9260c04ae9bf734c67195ed305)."
+            },
+            {
+                "id": "328655e3-992a-4f86-b827-2b5a85090dbf",
+                "createdAt": "2025-09-02T15:18:46.758000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 48d4efae9ff349efa1d6be6f5b287f58)."
+            },
+            {
+                "id": "54c6a9f8-1851-4fd4-891e-99952953841e",
+                "createdAt": "2025-09-02T15:17:56.644000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 095e74a998f247958e8cc52dd9edae72)."
+            },
+            {
+                "id": "a2681b04-9bf5-4639-b4ae-538742df5026",
+                "createdAt": "2025-09-02T15:17:06.710000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 0dde217c4dc7403386524bfca28df5b3)."
+            },
+            {
+                "id": "e3dce13b-97a7-4273-8c87-9dc1e25d6b55",
+                "createdAt": "2025-09-02T15:16:16.762000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 37908d5ef97540eba26f089f22cba6ae)."
+            },
+            {
+                "id": "4f879c32-bd67-486a-8e3a-7ab5ef1d3496",
+                "createdAt": "2025-09-02T15:15:23.846000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task dd6a455a81a64ad8b9e03054bf1a5f5a)."
+            },
+            {
+                "id": "7e8d8e48-b3cf-4bdd-9dc7-09962b336e32",
+                "createdAt": "2025-09-02T15:14:32.949000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 11b6d1917ec34d6a9f39e3909ee064ad)."
+            },
+            {
+                "id": "53a2ece8-66e2-425a-8d06-1b851f294221",
+                "createdAt": "2025-09-02T15:13:41.889000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task f9480f2b1611416fa4bdd91396b6e87a)."
+            },
+            {
+                "id": "edd02afc-1462-4bab-9e4d-64c831937783",
+                "createdAt": "2025-09-02T15:12:51.315000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 242c650108134d94b1587bb25ea4a606)."
+            },
+            {
+                "id": "ca7398b5-8c2d-43e2-a10f-d1851a3fe8ae",
+                "createdAt": "2025-09-02T15:12:00.607000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 4171cf839d464cef911b7f0255d04f8f)."
+            },
+            {
+                "id": "83c89111-7e60-4ed2-b641-6ceef6165f70",
+                "createdAt": "2025-09-02T15:11:09.742000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 283dcb901edd4c3f8f932d0b0177d796)."
+            },
+            {
+                "id": "558e36be-a93d-4559-b663-3239bcc676f1",
+                "createdAt": "2025-09-02T15:10:17.825000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 94e6d138a2264e68bdbc432bb4fb97d7)."
+            },
+            {
+                "id": "22314bf6-ee28-4a3e-9c67-7d19d205775c",
+                "createdAt": "2025-09-02T15:09:26.153000+05:30",
+                "message": "(service scalable-webapp-prod) has started 1 tasks: (task 35cc2f8a864d4594bb5a9ebaa13f9954)."
+            }
+        ],
+        "createdAt": "2025-09-02T15:09:10.273000+05:30",
+        "placementConstraints": [],
+        "placementStrategy": [],
+        "networkConfiguration": {
+            "awsvpcConfiguration": {
+                "subnets": [
+                    "subnet-0550b709041675350",
+                    "subnet-007a1b5367e8d32f5"
+                ],
+                "securityGroups": [
+                    "sg-081be2cb80aafbf77"
+                ],
+                "assignPublicIp": "DISABLED"
+            }
+        },
+        "healthCheckGracePeriodSeconds": 0,
+        "schedulingStrategy": "REPLICA",
+        "deploymentController": {
+            "type": "ECS"
+        },
+        "createdBy": "arn:aws:iam::114091642196:root",
+        "enableECSManagedTags": false,
+        "propagateTags": "NONE",
+        "enableExecuteCommand": false,
+        "availabilityZoneRebalancing": "DISABLED"
+    }
+}

@@ -2,26 +2,36 @@ name: ci-cd-ecs
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
+# OIDC + read access for the repo
+permissions:
+  id-token: write
+  contents: read
+
+# Adjust if you like; these are safe to keep here (no secrets)
 env:
-  AWS_REGION: ${{ secrets.AWS_REGION }}
-  ECR_REPO: ${{ secrets.ECR_REPO }}
+  AWS_REGION: us-east-1
+  ECR_REPO: scalable-webapp-repo   # matches your Terraform ECR repo
 
 jobs:
   build-and-scan:
     runs-on: ubuntu-latest
+
+    outputs:
+      image-uri: ${{ steps.meta.outputs.IMAGE_URI }}
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
+      # OIDC: assume your AWS role (no access keys needed)
+      - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: arn:aws:iam::114091642196:role/github-cicd-role
+          aws-region: ${{ env.AWS_REGION }}
 
-      - name: Login to ECR
+      - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
@@ -29,6 +39,7 @@ jobs:
         run: |
           docker build -t $ECR_REPO:${{ github.sha }} .
 
+      # Optional but useful: scan the image
       - name: Security scan (Trivy)
         uses: aquasecurity/trivy-action@0.24.0
         with:
@@ -38,27 +49,37 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
 
-      - name: Tag & Push
+      - name: Tag & push to ECR
         run: |
-          docker tag $ECR_REPO:${{ github.sha }} ${{ steps.login-ecr.outputs.registry }}/$ECR_REPO:${{ github.sha }}
-          docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPO:${{ github.sha }}
+          REGISTRY="${{ steps.login-ecr.outputs.registry }}"
+          docker tag  $ECR_REPO:${{ github.sha }}  $REGISTRY/$ECR_REPO:${{ github.sha }}
+          docker push $REGISTRY/$ECR_REPO:${{ github.sha }}
+
+      - name: Set image URI output
+        id: meta
+        run: |
+          echo "IMAGE_URI=${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPO }}:${{ github.sha }}" >> "$GITHUB_OUTPUT"
 
   deploy-staging:
     needs: [build-and-scan]
     runs-on: ubuntu-latest
     environment: staging
+
     steps:
       - uses: actions/checkout@v4
-      - name: Configure AWS credentials
+
+      - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: arn:aws:iam::114091642196:role/github-cicd-role
+          aws-region: ${{ env.AWS_REGION }}
+
+      # Render task definition from a template that contains __IMAGE__
       - name: Render task definition
         run: |
-          sed "s|__IMAGE__|${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPO }}:${{ github.sha }}|g" ecs-taskdef-template.json > taskdef.json
-        shell: bash
+          IMG="${{ needs.build-and-scan.outputs.image-uri }}"
+          sed "s|__IMAGE__|${IMG}|g" ecs-taskdef-template.json > taskdef.json
+
       - name: Update ECS service (staging)
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
@@ -66,32 +87,31 @@ jobs:
           service: ${{ secrets.ECS_SERVICE_STAGING }}
           cluster: ${{ secrets.ECS_CLUSTER }}
           wait-for-service-stability: true
+
       - name: Integration test (health)
         run: |
-          # Replace with your ALB DNS name (staging path if any)
-          curl -fsSL "http://$ALB_DNS/healthz" || (echo "Health check failed" && exit 1)
-        env:
-          ALB_DNS: ${{ secrets.ALB_DNS_STAGING }}
+          curl -fsSL "http://${{ secrets.ALB_DNS_STAGING }}/healthz" || (echo "Health check failed" && exit 1)
 
   deploy-prod:
     needs: [deploy-staging]
     runs-on: ubuntu-latest
-    environment: production  # require manual approval via GitHub Environments
+    environment: production   # protect this env in GitHub for manual approval
+
     steps:
       - uses: actions/checkout@v4
-      - name: Configure AWS credentials
+
+      - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: arn:aws:iam::114091642196:role/github-cicd-role
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Render task definition
         run: |
-          sed "s|__IMAGE__|${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPO }}:${{ github.sha }}|g" ecs-taskdef-template.json > taskdef.json
-        shell: bash
+          IMG="${{ needs.build-and-scan.outputs.image-uri }}"
+          sed "s|__IMAGE__|${IMG}|g" ecs-taskdef-template.json > taskdef.json
 
-      - name: Update ECS service (prod -> green TG)
+      - name: Update ECS service (prod)
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: taskdef.json
@@ -99,6 +119,7 @@ jobs:
           cluster: ${{ secrets.ECS_CLUSTER }}
           wait-for-service-stability: true
 
+      # Optional canary/weighted shift between blue/green TGs under the ALB listener
       - name: Canary shift example (20% green)
         run: |
           bash scripts/canary_shift.sh "${{ secrets.ALB_LISTENER_ARN }}" "${{ secrets.TG_BLUE_ARN }}" "${{ secrets.TG_GREEN_ARN }}" 80 20
